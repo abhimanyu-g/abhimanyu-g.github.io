@@ -1,0 +1,26 @@
+#+TITLE: 👋🏻 Hey there,
+#+hugo_section: /
+#+hugo_paired_shortcodes: typeit
+
+Welcome to my page. I'm Abhimanyu Govindaraju
+#+attr_shortcode: tag=h3 speed=60 breakLines=false loop=true
+#+begin_typeit
+Embedded systems Engineer
+Emacs tinkerer
+Calisthenics Enthusiast
+Amateur musician
+#+end_typeit
+
+In software, a [[https://refactoring.guru/design-patterns/singleton][singleton]] is a design pattern that ensures only one instance of a class exists — a solitary presence with a purpose.
+
+In life, we are each our own singleton — uniquely instantiated, deeply stateful, shaped by memory and experience.
+
+Singletonlife is a meditation on this singular existence: one developer navigating many dimensions — embedded systems, calisthenics, music, Emacs, and meaning — all within a single coherent process.
+
+No duplication, no forking — just one instance, dynamically evolving, yet always whole.
+
+Learn more about me [[/about][here]]
+
+#+begin_quote
+To live the Singletonlife is to embrace solitude not as isolation, but as integrity. A life compiled with curiosity, linked with intention, and executed with awareness.
+#+end_quote
