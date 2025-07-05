@@ -1,0 +1,17 @@
+---
+title: "About"
+date: 2025-07-05
+layout: single
+author: "Abhimanyu G"
+draft: false
+showDate: false
+showReadingTime: false
+showWordCount: false
+description: "About Abhimanyu G - Embedded Linux Engineer, Kernel Developer, ARM Expert"
+---
+
+I'm a systems engineer and Linux enthusiast passionate about building deeply technical solutions at the intersection of hardware and software. With a strong focus on embedded Linux, kernel development, and ARM architecture, I help companies design performant, low-level systems that scale.
+
+I'm currently diving deep into the Linux kernel and real-time systems, contributing to open-source projects, and sharing what I learn along the way. Whether it's writing drivers, debugging obscure bugs, or optimizing build systems, I love solving hard problems that touch silicon.
+
+When I'm not coding, I'm mentoring engineers, developing hands-on training material, or exploring new ways to turn deep tech into valuable, scalable products.
