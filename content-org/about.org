@@ -1,13 +1,13 @@
-+++
-title = "About"
-author = ["Abhimanyu G"]
-description = "About Abhimanyu G - Embedded Linux Engineer, Kernel Developer, ARM Expert"
-draft = false
-showDate = false
-showReadingTime = false
-showWordCount = false
-+++
+#+TITLE: About
+#+hugo_section: /
+#+hugo_paired_shortcodes: typeit
+#+export_file_name: about
+#+HUGO_CUSTOM_FRONT_MATTER: :showDate false :showReadingTime false :showWordCount false
+#+description: About Abhimanyu G - Embedded Linux Engineer, Kernel Developer, ARM Expert
+
 
 I'm a systems engineer and Linux enthusiast passionate about building deeply technical solutions at the intersection of hardware and software. With a strong focus on embedded Linux, kernel development, and ARM architecture, I help companies design performant, low-level systems that scale.
 
 I'm currently diving deep into the Linux kernel and real-time systems, contributing to open-source projects, and sharing what I learn along the way. Whether it's writing drivers, debugging obscure bugs, or optimizing build systems, I love solving hard problems that touch silicon.
+
+
