@@ -1,6 +1,6 @@
 #+TITLE: About
 #+hugo_section: /
-#+hugo_paired_shortcodes: typeit
+#+hugo_paired_shortcodes: badge
 #+export_file_name: about
 #+HUGO_CUSTOM_FRONT_MATTER: :showDate false :showReadingTime false :showWordCount false
 #+description: About Abhimanyu G - Embedded Linux Engineer, Kernel Developer, ARM Expert
@@ -10,4 +10,56 @@ I'm a systems engineer and Linux enthusiast passionate about building deeply tec
 
 I'm currently diving deep into the Linux kernel and real-time systems, contributing to open-source projects, and sharing what I learn along the way. Whether it's writing drivers, debugging obscure bugs, or optimizing build systems, I love solving hard problems that touch silicon.
 
+* My Experiences
 
+** SiMa.ai
+*** Staff Engineer
+#+begin_badge
+Sep'25-current
+#+end_badge
+
+Linux BSP and platform developer, responsible for multitude of low level development. Currently working on /video codec/ integration and /network-on-chip/ software development.
+
+=kernel driver=, =C programming language=, =ARM SoC=, =yocto project=
+** Samsung Semiconductor India Research
+*** Staff Engineer
+#+begin_badge
+Mar'23 - Sep'24
+#+end_badge
+
+
+*** Associate Staff Engineer
+#+begin_badge
+Jul'21 - Mar'23
+#+end_badge
+
+
+I was hired at this position into /custom SoC/ team which later merged with *Samsung Automotive team*. There I dived deeper into ARM SoC and its secure offerings
+
+
+
+** PathPartner Technologies (Now KPIT)
+*** Senior Software Engineer
+#+begin_badge
+Jul'19 - Jun'21
+#+end_badge
+
+*** Software Engineer
+#+begin_badge
+Feb'18 - Jul'19
+#+end_badge
+
+*** Project Trainee
+#+begin_badge
+Apr'17 - Jan'18
+#+end_badge
+
+** V3Novus Private Ltd
+*** Software Engineer
+#+begin_badge
+Mar'16 - Apr'17
+#+end_badge
+
+
+* Projects
+TBD
