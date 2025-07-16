@@ -8,81 +8,33 @@ showReadingTime = false
 showWordCount = false
 +++
 
-I'm a systems engineer and Linux enthusiast passionate about building deeply technical solutions at the intersection of hardware and software. With a strong focus on embedded Linux, kernel development, and ARM architecture, I help companies design performant, low-level systems that scale.
+## 💻 Work {#work}
 
-I'm currently diving deep into the Linux kernel and real-time systems, contributing to open-source projects, and sharing what I learn along the way. Whether it's writing drivers, debugging obscure bugs, or optimizing build systems, I love solving hard problems that touch silicon.
+I'm a systems engineer and Linux enthusiast with about a _decade_ (10 years) of experience. My passion lies in building deeply technical solutions at the intersection of hardware and software. With a strong focus on embedded Linux, kernel development, and ARM architecture, I help companies design performant, low-level systems that scale.
 
-
-## My Experiences {#my-experiences}
-
-
-### SiMa.ai {#sima-dot-ai}
+I'm currently diving deep into the Linux kernel and real-time systems, tinkering with Emacs and sharing what I learn along the way. Whether it's writing drivers, debugging obscure bugs, or optimizing build systems, I love solving hard problems that touch silicon.
 
 
-#### Staff Engineer {#staff-engineer}
-
-{{< badge >}}
-Sep'25-current
-{{< /badge >}}
-
-Linux BSP and platform developer, responsible for multitude of low level development. Currently working on _video codec_ integration and _network-on-chip_ software development.
-
-`kernel driver`, `C programming language`, `ARM SoC`, `yocto project`
+## 🏅 Skills {#skills}
 
 
-### Samsung Semiconductor India Research {#samsung-semiconductor-india-research}
+### General {#general}
+
+`C/C++`, `Linux`, `Device drivers`, `ARM Trusted firmware`, `ARM Trustzone`, `Kernel programming`
 
 
-#### Staff Engineer {#staff-engineer}
+### Tools/Toolchain {#tools-toolchain}
 
-{{< badge >}}
-Mar'23 - Sep'24
-{{< /badge >}}
+`Emacs`, `vim`, `gdb`, `gcc`, `Yocto`
 
 
-#### Associate Staff Engineer {#associate-staff-engineer}
-
-{{< badge >}}
-Jul'21 - Mar'23
-{{< /badge >}}
-
-I was hired at this position into _custom SoC_ team which later merged with **Samsung Automotive team**. There I dived deeper into ARM SoC and its secure offerings
-
-
-### PathPartner Technologies (Now KPIT) {#pathpartner-technologies--now-kpit}
-
-
-#### Senior Software Engineer {#senior-software-engineer}
-
-{{< badge >}}
-Jul'19 - Jun'21
-{{< /badge >}}
-
-
-#### Software Engineer {#software-engineer}
-
-{{< badge >}}
-Feb'18 - Jul'19
-{{< /badge >}}
-
-
-#### Project Trainee {#project-trainee}
-
-{{< badge >}}
-Apr'17 - Jan'18
-{{< /badge >}}
-
-
-### V3Novus Private Ltd {#v3novus-private-ltd}
-
-
-#### Software Engineer {#software-engineer}
-
-{{< badge >}}
-Mar'16 - Apr'17
-{{< /badge >}}
-
-
-## Projects {#projects}
+## 🔮 Projects {#projects}
 
 TBD
+
+
+## 🔎 Find me {#find-me}
+
+-   Blog [this site]
+-   LinkedIn - <https://www.linkedin.com/in/abhimanyu-g-55b60a58/>
+-   Github - <https://github.com/abhimanyu-g>
