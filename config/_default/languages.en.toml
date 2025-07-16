@@ -9,17 +9,17 @@ title = "SingletonLife"
   isoCode = "en"
   rtl = false
   dateFormat = "2 January 2006"
-  logo = "img/blowfish_logo.png"
-  #secondaryLogo = "img/secondary-logo.png"
-  #description = "My awesome website"
+  logo = "profile-icon.png"
+  # secondaryLogo = "img/secondary-logo.png"
+  description = "embedded system developer, emacs tinkerer, calesthenics enthusiast, ameture musician"
   # copyright = "Copy, _right?_ :thinking_face:"
 
 [params.author]
   name = "Abhimanyu Govindaraju"
 #   email = "youremail@example.com"
-   image = "img/blowfish_logo.png"
+   image = "profile-icon.png" #"img/blowfish_logo.png"
 #   imageQuality = 96
-   headline = "A lifetime of Embedded Systems, Emacs tweaks, Calisthenics and Music"
+   # headline = "A lifetime of Embedded Systems, Emacs tweaks, Calisthenics and Music"
    bio = "Staff Engineer @ SiMa.ai"
    links = [
 #     { email = "mailto:hello@your_domain.com" },
