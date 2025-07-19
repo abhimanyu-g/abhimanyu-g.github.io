@@ -1,0 +1,151 @@
+#+TITLE: Deploy your targets rapidly
+#+EXPORT_FILE_NAME: rapid-deploy
+#+FILETAGS: software emacs embedded-systems
+#+HUGO_PAIRED_SHORTCODES: gist
+#+DATE: <2025-07-19 Sat>
+#+HUGO_DRAFT: false
+#+DESCRIPTION: Deploying your cross-compiled targets to remote board via Emacs magic
+
+I am an /Embedded Software Engineer/ by profession. That means, I develop code for custom hardware (think on the lines of raspberry pi). Usually, the machine I develop code on is faster than the machine we develop code for.
+
+More often than not, the machine I develop code on is a variant of /x86 architecture/ and the machine I want to run my code is a variant of /ARM architecture/. The developed code is [[https://en.wikipedia.org/wiki/Cross_compiler][cross compiled]] on the host (x86) machine to run on the target (ARM) machine.
+
+The built binaries/libraries are then copied to the remote target board and executed there.
+
+My workflow looks something like this
+#+begin_src plantuml :file /tmp/embedded-workflow.svg  :exports results
+  @startmindmap
+  ,*:==Development
+  ----
+  The development happens on much powerful x86 host machine/servers
+  ;
+  ,**:==Remote target
+  ----
+  Remote target would be something like raspberry pi,
+  beagle bone or other custome hardware.
+  This is where the built artifacts (binaries, libraries, etc..) execute
+  ;
+  ,*** uart
+  ,*** display
+  ,*** buttons
+  ,*** leds
+  @endmindmap
+#+end_src
+
+However, as a developer building multiple binaries and/or libraries through out the day, it is tedious to constantly copy the built artifacts to target board.
+
+I began to wonder,
+#+begin_quote
+Can I streamline this better with Emacs ?
+#+end_quote
+
+The answer is almost always *Of course!*. Here I preset the approach and the thought process that went in for this implementation
+
+* Requirements
+Based on my workflow, I had the following requirements
+*** Project specific build targets
+Each Project will have a specific artifact. It could be a executable, library, configuration file etc.. I have to figure out a way to have project specific deploy-able assets. The assets should auto-switch when I change a project
+*** Target address generation
+I copy the assets over network. So, I need a /<user>/ and an /<ip-address>/ to reach the board over network. The /ip-address/ might change when the target board is rebooted. So, I need a way to store this /ip-address/ and use it dynamically when transferring the assets.
+*** Clean and easy UI
+If a project generates more than 1 artifact, I need to choose which artifact to push to the remote target. So, it helps to have a /choose-able/ option to transfer
+* Implementation
+*** Project specific build targets
+One of the requirement is /project specific build targets/. Emacs has a strong notion of what a "project" is. Here is a quote from the [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Projects.html][documentation]]
+#+begin_quote
+A project is a collection of files used for producing one or more programs. Files that belong to a project are typically stored in a hierarchy of directories; the top-level directory of the hierarchy is known as the project root.
+
+Whether a given directory is a root of some project is determined by the project-specific infrastructure, known as project back-end. Emacs currently supports two such back-ends: VC-aware (see Version Control), whereby a VCS repository is considered a project; and EDE (see Emacs Development Environment). This is expected to be extended in the future to support additional types of projects.
+#+end_quote
+
+In summary, any root folder that has a =.git= (for VC aware) and/or =.dir-locals.el= (for Emacs Dev env) is considered a project. They need not be mutually exclusive.
+
+I added a =.dir-locals.el= file at the root of my project with following content
+#+begin_src emacs-lisp
+  ;;; Directory Local Variables            -*- no-byte-compile: t -*-
+  ;;; For more information see (info "(emacs) Directory Variables")
+
+  ((prog-mode
+    . ((eval
+        .(setq custom/project-deploy-alist
+             '(("item-name-1" "/path1/on/host" "/tmp/")
+               ("item-name-2" "/path2/on/host" "/path/to/item-2")
+               ("item-name-3" "/path3/on/host" "/path/to/item-3")))))))
+
+#+end_src
+
+What this alien looking code effectively does is
+#+begin_example
+  When in 'prog-mode', assign variable 'custom/project-deploy-alist'
+  with a list-of-lists that is of the format
+  ((<name> <local-path-on-host> <path-on-remote>)
+   (<name> <local-path-on-host> <path-on-remote>))
+#+end_example
+
+This variable is defined in my =init.org= / =init.el= file like so
+#+begin_src emacs-lisp
+    (defvar-local custom/project-deploy-alist
+        '(("dummy" "/tmp" "/tmp/")
+          ("item-name-2" "/path/on/host" "/path/to/item-2"))
+        "Project specific deploy alist set from '.dir-locals.el' file at project root.")
+#+end_src
+
+*** Pre-requisite
+In the previous section, I took care of "telling emacs what and where to push" but, I have not yet defined the remote target. In my case, the username of my embedded board is same always, but the IP address might change due to DHCP (dynamic IP allocation). Overtime, I realised, it is convenient to store the IP address of the board in an /Emacs register/ and use it everywhere. So, that's what I did
+
+When you execute =C-x r s b= on the IP address (ex: 192.168.255.252), Emacs stores the IP address in register labeled *"b"*
+
+Additionally, I prefer using a non-interactive shell to make the transfers happen. That implies, I cannot enter /password/ when transferring. A workaround would be to use =ssh-copy-id <user>@<ip>=. This is a one-time configuration
+
+*** Transfer of build artifacts
+Checklist
+- Define a variable that lists what needs to be transferred and where it needs to be put... ☑️
+- Store IP address in a Emacs register *"b"*... ☑️
+- Configure password less transfer with =ssh-copy-id=... ☑️
+
+The heavy lifting is done by my custom elisp function described in my /init.org/ file
+#+begin_src emacs-lisp
+  (defun custom/project-rsync-deploy-to-target (&optional user ip)
+    "Prompt user to select an item to be deployed to target.
+   ;; Remember to 'ssh-copy-id user@ip' before this command.
+   ;; This command does not accept any passwords by default
+    - target board 'ip' to be stored in @register b
+    - 'user' defaults to 'root' if not provided"
+    (interactive)
+    (let* ((remote-target
+          (format "%s@%s"
+                  (if (null user) "root" user)
+                  (if (null ip) (get-register ?b) ip)))
+         (names (mapcar #'car custom/project-deploy-alist))
+         (choice (completing-read "Select deploy item: " names nil t))
+         (paths (cdr (assoc choice custom/project-deploy-alist)))
+         (local-path (nth 0 paths))
+         (remote-path (nth 1 paths))
+         (rsync-command-string
+          (format "rsync -qavz %s %s "
+                  (shell-quote-argument local-path)
+                  (shell-quote-argument (format "%s:%s" remote-target remote-path)))))
+      (message "Executing shell command %s" rsync-command-string)
+      (async-shell-command rsync-command-string nil nil)))
+
+#+end_src
+
+During implementation, I learnt about ~rsync~ a quicker transfer utility than standard ~scp~. Well, that is what happens in a day on Emacs world 😀
+
+The code is essentially doing the following,
+- Construct the remote address in the form ~user@ip-addr~ and assign it to /remote-target/
+- When this elsip function is executed, provide choice of /names/ as defined in the first element of the list in /.dir-locals.el/
+- When the user chooses an option, get the 2nd element (a.k.a local-path to get the artifact from) and 3rd element (a.k.a remote-path where to place this artifact on remote target)
+- Construct the command
+  #+begin_src shell
+    rsync -qavz /path/on/local-machine user@remote-ip:/path/on/remote-machine
+  #+end_src
+- Inform user the final command that would be executed
+- Finally, execute the command in =async shell=
+
+This is how it looks in practice. Transferring dummy files to a rigged up docker setup
+[[file:/images/remote-deploy-demo.gif]]
+
+It was a fun implementation. Learnt a bit more 😃
+
+If you like my work, consider sharing. Cheers 🍻
